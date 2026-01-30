@@ -21,3 +21,15 @@ if(SPDLOG_BUILD_EXAMPLE_HO)
     add_executable(example_header_only example.cpp)
     target_link_libraries(example_header_only PRIVATE spdlog::spdlog_header_only)
 endif()
+
+# ---------------------------------------------------------------------------------------
+# Business Logger Example
+# ---------------------------------------------------------------------------------------
+add_executable(business_logger_example business_logger_example.cpp)
+target_link_libraries(business_logger_example PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
+
+# ---------------------------------------------------------------------------------------
+# Rotation Test Example
+# ---------------------------------------------------------------------------------------
+add_executable(rotation_test rotation_test.cpp)
+target_link_libraries(rotation_test PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
