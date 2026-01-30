@@ -10,16 +10,16 @@
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <memory>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <mutex>
 
 namespace spdlog {
 
 enum class BusinessType {
-    ScreenRecord,      
-    DesktopOpen,       
-    KeyboardRecord,    
-    AudioRecord        
+    ScreenRecord      = 0,
+    DesktopOpen       = 1,
+    KeyboardRecord    = 2,
+    AudioRecord       = 3
 };
 
 inline const char* business_type_to_string(BusinessType type) {
@@ -105,7 +105,7 @@ public:
 
     template <typename... Args>
     void error(BusinessType type, format_string_t<Args...> fmt, Args&&... args) {
-        log(type, level::error, fmt, std::forward<Args>(args)...);
+        log(type, level::err, fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
@@ -175,7 +175,7 @@ private:
     }
 
     std::mutex mutex_;
-    std::unordered_map<BusinessType, std::shared_ptr<logger>> loggers_;
+    std::map<BusinessType, std::shared_ptr<logger>> loggers_;
     std::string log_dir_;
     size_t max_file_size_;
     size_t max_files_;
